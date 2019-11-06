@@ -29,7 +29,7 @@ __attribute__ ((weak))
 void matrix_scan_keymap(void) {}
 
 void matrix_scan_user(void) {
-    #ifdef AUDIO_ENABLE
+#ifdef AUDIO_ENABLE
     if (muse_mode) {
         if (muse_counter == 0) {
             uint8_t muse_note = muse_offset + SCALE[muse_clock_pulse()];
@@ -41,7 +41,7 @@ void matrix_scan_user(void) {
         }
         muse_counter = (muse_counter + 1) % muse_tempo;
     }
-    #endif
+#endif
     matrix_scan_keymap();
 }
 
@@ -96,6 +96,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
+
+        case MAKE:
+            if (record->event.pressed) {
+                SEND_STRING(QMK_KEYBOARD ":" QMK_KEYMAP ":");
+                #if defined(__arm__)  // only run for ARM boards
+                    SEND_STRING(":dfu-util");
+                #elif defined(BOOTLOADER_DFU) // only run for DFU boards
+                    SEND_STRING(":dfu");
+                #elif defined(BOOTLOADER_HALFKAY) // only run for teensy boards
+                    SEND_STRING(":teensy");
+                #elif defined(BOOTLOADER_CATERINA) // only run for Pro Micros
+                    SEND_STRING(":avrdude");
+                #endif // bootloader options
+            }
+            // Send reset_keyboard command instead of pressing reset button
+            #if  (defined(BOOTLOADER_DFU) || defined(BOOTLOADER_LUFA_DFU) || defined(BOOTLOADER_QMK_DFU))
+            //reset_keyboard();
+            #endif
+            return false;
+            break;
     }
     return process_record_keymap(keycode, record);
 };
@@ -103,11 +123,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 __attribute__ ((weak))
 layer_state_t layer_state_set_keymap (layer_state_t state) {
-  return state;
+    return state;
 }
 
 layer_state_t layer_state_set_user (layer_state_t state) {
-  return layer_state_set_keymap (state);
+    return layer_state_set_keymap (state);
 }
 
 

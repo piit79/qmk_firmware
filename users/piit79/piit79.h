@@ -29,6 +29,7 @@ enum piit79_keycodes {
     LOWER = SAFE_RANGE,
     RAISE,
     VERSION,
+    MAKE,
     SAFE_RANGE_KEYMAP   // To be used as the starting custom keymap-specific keycode
 };
 
