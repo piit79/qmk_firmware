@@ -29,7 +29,7 @@ enum piit79_layers {
 #define LCTL_ESC LCTL_T(KC_ESC)
 #define CZECH TT(_CZECH)
 #define NAV_SPC LT(_NAV, KC_SPC)
-#define FN1_WAKE LT(_FN1, WAKE)
+#define FN1_WAKE LT(_FN1, KC_SYSTEM_WAKE)
 #define FN1 MO(_FN1)
 #define FN2 MO(_FN2)
 #define THRD_TAB LT(_THIRD, KC_TAB)
