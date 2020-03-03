@@ -90,6 +90,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 
+        case SLEEP:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_SYSTEM_SLEEP));
+            }
+            return false;
+            break;
+
+        case WAKE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_SYSTEM_WAKE));
+            }
+            return false;
+            break;
+
         case VERSION:
             if (record->event.pressed) {
                 SEND_STRING(QMK_KEYBOARD "/" QMK_KEYMAP " @ " QMK_VERSION);
