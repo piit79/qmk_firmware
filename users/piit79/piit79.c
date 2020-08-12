@@ -113,7 +113,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case MAKE:
             if (record->event.pressed) {
-                SEND_STRING(QMK_KEYBOARD ":" QMK_KEYMAP ":");
+                SEND_STRING(QMK_KEYBOARD ":" QMK_KEYMAP);
                 #if defined(__arm__)  // only run for ARM boards
                     SEND_STRING(":dfu-util");
                 #elif defined(BOOTLOADER_DFU) // only run for DFU boards
@@ -160,7 +160,6 @@ void suspend_power_down_user(void)
 {
     suspend_power_down_keymap();
 }
-
 
 
 __attribute__ ((weak))
